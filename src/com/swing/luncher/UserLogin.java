@@ -29,6 +29,7 @@ class UserLogin
 	private		JTabbedPane tabbedPane;
 	private		JPanel		panelConnexion;
 	private		JPanel		panelInscription;
+	private		JPanel		panelInscriptionClient;
 
 	JButton loginB, cancel;
 	JTextField uname;
@@ -68,12 +69,14 @@ class UserLogin
 		// Create the tab pages
 		createPage1();
 		createPage2();
+		createPage3();
 	
 
 		// Create a tabbed pane
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab( "Connexion", panelConnexion );
 		tabbedPane.addTab( "Demande d'inscription Shop Owner", panelInscription );
+		tabbedPane.addTab( "Demande d'inscription Client", panelInscriptionClient );
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 203, 128, 130);
@@ -317,6 +320,8 @@ class UserLogin
 			
 				
 		}
+		
+		
 		/*********************************************************/	
 		//il faut charger les boutique  vides seulement
 		 modelListBoutique =  new DefaultListModel();
@@ -327,6 +332,115 @@ class UserLogin
 				
 		}
 		listBoutique= new JList(modelListBoutique);
+	}
+
+	public void createPage3()
+	{
+		panelInscriptionClient = new JPanel();
+		panelInscriptionClient.setLayout( null );
+		
+
+		nom = new JTextField();
+		nom.setBounds(343, 112, 143, 20);		
+		panelInscriptionClient.add(nom);
+		
+		JLabel lblName = new JLabel("Nom:");
+		lblName.setBounds(301, 126, 46, 14);
+		panelInscriptionClient.add(lblName);
+		
+		
+		
+		JButton demande = new JButton("Enregistre");
+		demande.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				
+				/***********************/
+				Client u=new Client();
+				
+				
+				u.setNom(nom.getText());
+				u.setEmail(email.getText());
+				u.setLogin(login.getText());
+				u.setAdresse(adress.getText());
+				u.setTel(tel.getText());
+				u.setPrenom(prenom.getText());				
+				u.setLogin(login.getText());			
+				
+				
+				u.setPassword(new String(pwd.getPassword()));
+				u.setEnabled(true);
+				
+					UserServiceDelegate.getProxy().create(u);
+				
+				
+				clearTextFieldsS();
+				
+				
+				JOptionPane optionPane = new JOptionPane("Votre Demande à était Bient envoyer",
+						JOptionPane.YES_OPTION);
+				JDialog dialog = optionPane.createDialog("Warning!");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+		
+				
+			}
+		});
+		demande.setBounds(231, 321, 89, 23);
+		panelInscriptionClient.add(demande);
+		
+		JLabel lblPrnom = new JLabel("Prénom");
+		lblPrnom.setBounds(88, 126, 46, 14);
+		panelInscriptionClient.add(lblPrnom);
+		
+		JLabel lblTl = new JLabel("Tél");
+		lblTl.setBounds(301, 167, 46, 14);
+		panelInscriptionClient.add(lblTl);
+		
+		prenom = new JTextField();
+		prenom.setBounds(144, 123, 134, 20);
+		panelInscriptionClient.add(prenom);
+		
+		
+		tel = new JTextField();
+		tel.setBounds(343, 164, 143, 20);
+		panelInscriptionClient.add(tel);
+		
+		JLabel lblEmail = new JLabel("email");
+		lblEmail.setBounds(88, 167, 46, 14);
+		panelInscriptionClient.add(lblEmail);
+		
+		email = new JTextField();
+		email.setBounds(144, 164, 134, 20);
+		panelInscriptionClient.add(email);
+		
+		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setBounds(88, 69, 46, 14);
+		panelInscriptionClient.add(lblLogin);
+		
+			login = new JTextField();
+		login.setBounds(144, 66, 134, 20);
+		
+		panelInscriptionClient.add(login);
+		
+		JLabel lblPwd = new JLabel("Pwd");
+		lblPwd.setBounds(301, 69, 46, 14);
+		panelInscription.add(lblPwd);
+		
+		pwd = new JPasswordField();
+		pwd.setBounds(343, 66, 143, 20);
+		panelInscriptionClient.add(pwd);
+		
+		JLabel lblAdresse = new JLabel("Adresse");
+		lblAdresse.setBounds(187, 228, 46, 14);
+		panelInscriptionClient.add(lblAdresse);
+		
+		adress = new JTextArea();
+		adress.setBounds(258, 203, 183, 76);
+		panelInscriptionClient.add(adress);
+		
+		
+		 modelList =  new DefaultListModel();
+		
 	}
 
 	public void clearTextFieldsS (){

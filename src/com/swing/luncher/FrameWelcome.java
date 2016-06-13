@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
+import com.swing.frame.FrameEvenement;
 import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
@@ -34,6 +35,8 @@ public class FrameWelcome extends JFrame {
 	 FrameShopOwner frameShopOwner;
 	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
+	 FrameEvenement frameEvenement;
+	 
 	 void disableFrame(){
 		 setVisible(false); 
 		 
@@ -61,6 +64,9 @@ public class FrameWelcome extends JFrame {
 		 if (frameSousCategorie!=null){
 			 frameSousCategorie.setVisible(false);
 		 }
+		 if (frameEvenement!=null){
+			 frameEvenement.setVisible(false);
+		 }
 		 
 	 }
 	 FrameWelcome frameWelcome;
@@ -81,6 +87,7 @@ public class FrameWelcome extends JFrame {
 			 JMenuItem userItem5 = new JMenuItem("Shop Owner");
 			 JMenuItem userItem6 = new JMenuItem("Categorie");
 			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
+			 JMenuItem userItem8 = new JMenuItem("Evenement");
 			 userItem.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
@@ -129,6 +136,12 @@ public class FrameWelcome extends JFrame {
 					 frameSousCategorie=new FrameSousCategorie(Menu());
 					 frameSousCategorie.setVisible(true);
 				 }});
+			 userItem8.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent event) {
+					 disableFrame();
+					 frameEvenement=new FrameEvenement(Menu());
+					 frameEvenement.setVisible(true);
+				 }});
 		
 			 gestion.add(userItem);
 			 gestion.add(userItem2);
@@ -137,6 +150,7 @@ public class FrameWelcome extends JFrame {
 			 gestion.add(userItem5);
 			 gestion.add(userItem6);
 			 gestion.add(userItem7);
+			 gestion.add(userItem8);
 			 menubar.add(gestion);
 			 
 			 
