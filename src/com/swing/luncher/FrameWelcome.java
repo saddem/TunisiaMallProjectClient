@@ -16,6 +16,7 @@ import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
 import com.swing.frame.FrameEvenement;
+import com.swing.frame.FrameProduit;
 import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
@@ -31,8 +32,6 @@ public class FrameWelcome extends JFrame {
 
 	private JPanel contentPane;
 
-	
-
 	 FrameSecteurActiviter frameSecteurActiviter;
 	 FrameAdministrateur frameAdministrateur;
 	 FrameProfile frameProfile;
@@ -41,6 +40,7 @@ public class FrameWelcome extends JFrame {
 	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
 	 FrameEvenement frameEvenement;
+	 FrameProduit frameProduit;
 	 
 	 void disableFrame(){
 		 setVisible(false); 
@@ -73,6 +73,9 @@ public class FrameWelcome extends JFrame {
 			 frameEvenement.setVisible(false);
 		 }
 		 
+		 if (frameProduit!=null){
+			 frameProduit.setVisible(false);
+		 }
 	 }
 	 FrameWelcome frameWelcome;
 		public  JMenuBar Menu(){
@@ -93,6 +96,7 @@ public class FrameWelcome extends JFrame {
 			 JMenuItem userItem6 = new JMenuItem("Categorie");
 			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
 			 JMenuItem userItem8 = new JMenuItem("Evenement");
+			 JMenuItem userItem9 = new JMenuItem("Produit");
 			 userItem.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
@@ -147,6 +151,13 @@ public class FrameWelcome extends JFrame {
 					 frameEvenement=new FrameEvenement(Menu());
 					 frameEvenement.setVisible(true);
 				 }});
+			 
+			 userItem9.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent event) {
+					 disableFrame();
+					 frameProduit=new FrameProduit(Menu());
+					 frameProduit.setVisible(true);
+				 }});
 		
 			 gestion.add(userItem);
 			 gestion.add(userItem2);
@@ -156,6 +167,7 @@ public class FrameWelcome extends JFrame {
 			 gestion.add(userItem6);
 			 gestion.add(userItem7);
 			 gestion.add(userItem8);
+			 gestion.add(userItem9);
 			 menubar.add(gestion);
 			 
 			 

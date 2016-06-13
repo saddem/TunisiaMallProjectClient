@@ -230,10 +230,6 @@ public class FrameProduit extends JFrame {
 		textDescription.setColumns(10);
 		textDescription.setBounds(254, 233, 246, 45);
 		contentPane.add(textDescription);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(166, 289, 87, 20);
-		contentPane.add(dateChooser);
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {
 			@Override
