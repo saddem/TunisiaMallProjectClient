@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.esprit.entity.ShopOwner;
 import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
@@ -25,6 +26,7 @@ import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
 import com.swing.frame.FrameSousCategorie;
+import com.swing.variableSession.VariableSession;
 
 
 public class FrameWelcome extends JFrame {
@@ -38,11 +40,8 @@ public class FrameWelcome extends JFrame {
 	 FrameShopOwner frameShopOwner;
 	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
-
 	 FrameEvenement frameEvenement;
 	 FrameProduit frameProduit;
-	 
-
 	 FrameCommande frameCommande;
 
 	 void disableFrame(){
@@ -79,13 +78,10 @@ public class FrameWelcome extends JFrame {
 	 }
 	 FrameWelcome frameWelcome;
 		public  JMenuBar Menu(){
-			
-		
-		 
+
 			 JMenuBar menubar = new JMenuBar();
 			 JMenu gestion = new JMenu("Gestion ");
 			 menubar.add(gestion);
-			
 			
 			 gestion.setMnemonic(KeyEvent.VK_F);
 			 JMenuItem userItem = new JMenuItem("user");
@@ -178,7 +174,11 @@ public class FrameWelcome extends JFrame {
 			 gestion.add(userItem4);
 			 gestion.add(userItem5);
 			 gestion.add(userItem6);
-			 gestion.add(userItem7);
+			
+			if (VariableSession.getCurrentUser()  instanceof ShopOwner) {
+				 gestion.add(userItem7);
+			}
+			 
 			 gestion.add(userItem8);
 			 gestion.add(userItem9);
 			 gestion.add(userItem10);
