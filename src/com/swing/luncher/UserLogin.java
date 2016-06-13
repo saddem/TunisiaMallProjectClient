@@ -43,10 +43,10 @@ class UserLogin
 	private JTextField login;
 	private JTextArea adress;
 	private JPasswordField pwd;
-	private JList list ;
+	private JList listSecteurActivite ;
 
 	private JScrollPane scrollPane;
-	private DefaultListModel modelList;
+	private DefaultListModel modelListSecteurActivite;
 	private DefaultListModel modelListBoutique;
 	private JScrollPane scrollPane_1;
 	private JList listBoutique;
@@ -78,14 +78,27 @@ class UserLogin
 		tabbedPane.addTab( "Demande d'inscription Shop Owner", panelInscription );
 		tabbedPane.addTab( "Demande d'inscription Client", panelInscriptionClient );
 		
+		
+		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 203, 128, 130);
 		panelInscription.add(scrollPane);
+		 modelListSecteurActivite =  new DefaultListModel();
+			
+			ArrayList<SecteurActivite> secteurActivites=CommanServiceDelegate.getProxy().findAll(new SecteurActivite());
+			for (int i = 0; i < secteurActivites.size(); i++) {
+				modelListSecteurActivite.addElement(secteurActivites.get(i).getLibelle());
+				
+				
+					
+			}
+		listSecteurActivite = new JList(modelListSecteurActivite);
+		scrollPane.setViewportView(listSecteurActivite);
+		listSecteurActivite.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSecteurActivite.setSelectedIndex(0);
 		
-			list = new JList(modelList);
-			scrollPane.setColumnHeaderView(list);
-			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			list.setSelectedIndex(0);
+		
+		System.out.println(secteurActivites.size());
 			
 			scrollPane_1 = new JScrollPane();
 			scrollPane_1.setBounds(558, 203, 143, 147);
@@ -156,12 +169,12 @@ class UserLogin
 				u2.setLogin(un);
 				u2.setPassword(pa);
 				
-				SuperAdmin admin = (SuperAdmin) UserServiceDelegate.getProxy().auth(u);
+				SuperAdmin superAdmin = (SuperAdmin) UserServiceDelegate.getProxy().auth(u);
 				Client client=(Client) UserServiceDelegate.getProxy().auth(u1);
 				ShopOwner shopOwner=(ShopOwner) UserServiceDelegate.getProxy().auth(u2);
 				
-				if ( admin!= null){
-					VariableSession.getInstance().setCurrentUser(admin);
+				if ( superAdmin!= null){
+					VariableSession.getInstance().setCurrentUser(superAdmin);
 					dispose();
 					 new FrameWelcome();
 					 
@@ -215,6 +228,10 @@ class UserLogin
 		
 		
 		JButton demande = new JButton("Envoyer Votre Demande");
+		demande.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		demande.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				
@@ -236,8 +253,8 @@ class UserLogin
 				/***********************/
 				u.setApprouver("en attente");
 				u.setDemande(true);
-					System.out.println(list.getSelectedValue().toString());
-					u.setSecteurActiviter((SecteurActivite) CommanServiceDelegate.getProxy().findById(new SecteurActivite(), "libelle", "'"+list.getSelectedValue().toString()+"'"));
+					System.out.println(listSecteurActivite.getSelectedValue().toString());
+					u.setSecteurActiviter((SecteurActivite) CommanServiceDelegate.getProxy().findById(new SecteurActivite(), "libelle", "'"+listSecteurActivite.getSelectedValue().toString()+"'"));
 				
 					u.setBoutique((Boutique) CommanServiceDelegate.getProxy().findById(new Boutique(), "num", "'"+listBoutique.getSelectedValue().toString()+"'"));
 					
@@ -311,15 +328,7 @@ class UserLogin
 		panelInscription.add(adress);
 		
 		
-		 modelList =  new DefaultListModel();
-	
-		ArrayList<SecteurActivite> secteurActivites=CommanServiceDelegate.getProxy().findAll(new SecteurActivite());
-		for (int i = 0; i < secteurActivites.size(); i++) {
-			modelList.addElement(secteurActivites.get(i).getLibelle());
-			
-			
-				
-		}
+
 		
 		
 		/*********************************************************/	
@@ -439,7 +448,7 @@ class UserLogin
 		panelInscriptionClient.add(adress);
 		
 		
-		 modelList =  new DefaultListModel();
+		 modelListSecteurActivite =  new DefaultListModel();
 		
 	}
 
