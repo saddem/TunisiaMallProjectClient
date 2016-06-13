@@ -1,1 +1,6 @@
 /com/
+/delegate/
+/jboss-ejb-client.properties
+/jndi.properties
+/locator/
+/test/

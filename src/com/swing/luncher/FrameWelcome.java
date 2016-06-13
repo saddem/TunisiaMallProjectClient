@@ -15,16 +15,11 @@ import javax.swing.border.EmptyBorder;
 import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
-import com.swing.frame.FrameEvenement;
+import com.swing.frame.FrameCommande;
 import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
 import com.swing.frame.FrameSousCategorie;
-import java.awt.Label;
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 
 public class FrameWelcome extends JFrame {
@@ -40,8 +35,7 @@ public class FrameWelcome extends JFrame {
 	 FrameShopOwner frameShopOwner;
 	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
-	 FrameEvenement frameEvenement;
-	 
+	 FrameCommande frameCommande;
 	 void disableFrame(){
 		 setVisible(false); 
 		 
@@ -66,11 +60,8 @@ public class FrameWelcome extends JFrame {
 		 if (frameCategorie!=null){
 			 frameCategorie.setVisible(false);
 		 }
-		 if (frameSousCategorie!=null){
-			 frameSousCategorie.setVisible(false);
-		 }
-		 if (frameEvenement!=null){
-			 frameEvenement.setVisible(false);
+		 if (frameCommande!=null){
+			 frameCommande.setVisible(false);
 		 }
 		 
 	 }
@@ -92,7 +83,7 @@ public class FrameWelcome extends JFrame {
 			 JMenuItem userItem5 = new JMenuItem("Shop Owner");
 			 JMenuItem userItem6 = new JMenuItem("Categorie");
 			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
-			 JMenuItem userItem8 = new JMenuItem("Evenement");
+			 JMenuItem userItem8 = new JMenuItem("Commandes");
 			 userItem.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
@@ -144,8 +135,8 @@ public class FrameWelcome extends JFrame {
 			 userItem8.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
-					 frameEvenement=new FrameEvenement(Menu());
-					 frameEvenement.setVisible(true);
+					 frameCommande=new FrameCommande(Menu());
+					 frameCommande.setVisible(true);
 				 }});
 		
 			 gestion.add(userItem);
@@ -174,14 +165,11 @@ public class FrameWelcome extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblEspaceAdministrateur = new JLabel("Espace Administrateur");
-		lblEspaceAdministrateur.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEspaceAdministrateur.setForeground(Color.ORANGE);
-		lblEspaceAdministrateur.setFont(new Font("Lucida Grande", Font.PLAIN, 28));
-		lblEspaceAdministrateur.setBounds(6, 6, 438, 244);
-		contentPane.add(lblEspaceAdministrateur);
-		
 		setTitle("Welcome");
 		setVisible(true);
 	}
+	
+	
+	
+	
 	}
