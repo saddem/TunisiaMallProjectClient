@@ -27,7 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 
-public class FrameWelcome extends JFrame {
+public class FrameWelcomeClient extends JFrame {
 
 	private JPanel contentPane;
 
@@ -74,7 +74,7 @@ public class FrameWelcome extends JFrame {
 		 }
 		 
 	 }
-	 FrameWelcome frameWelcome;
+	 FrameWelcomeClient frameWelcome;
 		public  JMenuBar Menu(){
 			
 		
@@ -148,14 +148,9 @@ public class FrameWelcome extends JFrame {
 					 frameEvenement.setVisible(true);
 				 }});
 		
-			 gestion.add(userItem);
-			 gestion.add(userItem2);
+
 			 gestion.add(userItem3);
-			 gestion.add(userItem4);
-			 gestion.add(userItem5);
-			 gestion.add(userItem6);
-			 gestion.add(userItem7);
-			 gestion.add(userItem8);
+
 			 menubar.add(gestion);
 			 
 			 
@@ -164,7 +159,7 @@ public class FrameWelcome extends JFrame {
 			
 		}
 		
-	public FrameWelcome() {
+	public FrameWelcomeClient() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setJMenuBar(Menu());
@@ -174,7 +169,7 @@ public class FrameWelcome extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblEspaceAdministrateur = new JLabel("Espace Administrateur");
+		JLabel lblEspaceAdministrateur = new JLabel("Espace Client");
 		lblEspaceAdministrateur.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEspaceAdministrateur.setForeground(Color.ORANGE);
 		lblEspaceAdministrateur.setFont(new Font("Lucida Grande", Font.PLAIN, 28));

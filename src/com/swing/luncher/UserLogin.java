@@ -168,11 +168,11 @@ class UserLogin
 				} else if ( client != null) {
 					VariableSession.getInstance().setCurrentUser(client);
 					dispose();
-					 new FrameWelcome();
+					 new FrameWelcomeClient();
 				} else if ( shopOwner != null) {
 					VariableSession.getInstance().setCurrentUser(shopOwner);
 					dispose();
-					 new FrameWelcome();
+					 new FrameWelcomeShopOwner();
 				
 				} else {
 
