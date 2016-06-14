@@ -39,6 +39,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
+import com.toedter.calendar.JDateChooser;
 
 public class FrameEvenement extends JFrame {
 
@@ -46,10 +47,8 @@ public class FrameEvenement extends JFrame {
 	private JTextField id;
 	private JTable table;
 	private ModelEvenement modele;
-	private JTextField date_debut;
 	private JTextArea description;
 	private JList list;
-	private JTextField date_fin;
 	/**
 	 * Launch the application.
 
@@ -60,6 +59,13 @@ public class FrameEvenement extends JFrame {
 	 */
 	
 	public FrameEvenement(JMenuBar jMenuBar) {
+		JDateChooser date_debut = new JDateChooser();
+		date_debut.setBounds(168, 154, 115, 26);
+		contentPane.add(date_debut);
+		
+		JDateChooser date_fin = new JDateChooser();
+		date_fin.setBounds(342, 154, 115, 26);
+		contentPane.add(date_fin);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 335);
@@ -92,24 +98,9 @@ public class FrameEvenement extends JFrame {
 		
 	
 				u.setDescription(description.getText());
+				u.setDateDebut(date_debut.getDate());
+				u.setDateFin(date_fin.getDate());
 		
-				DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-				Date d1;
-				try {
-					d1 = df.parse(date_debut.getText());
-					u.setDateDebut(d1);	
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Date d2;
-				try {
-					d2 = df.parse(date_fin.getText());
-					u.setDateFin(d2);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
 				/***********************/
 			
@@ -163,25 +154,8 @@ public class FrameEvenement extends JFrame {
 		
 	
 				u.setDescription(description.getText());
-		
-				DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-				Date d1;
-				try {
-					d1 = df.parse(date_debut.getText());
-					u.setDateDebut(d1);	
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Date d2;
-				try {
-					d2 = df.parse(date_fin.getText());
-					u.setDateFin(d2);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}			
-				
+				u.setDateDebut(date_debut.getDate());
+				u.setDateFin(date_fin.getDate());
 				
 								/***********************/
 				
@@ -209,39 +183,31 @@ public class FrameEvenement extends JFrame {
 		scrollPane.setBounds(20, 11, 622, 104);
 		contentPane.add(scrollPane);
 		
-		JLabel lblPrnom = new JLabel("Date Début");
+		JLabel lblPrnom = new JLabel("Date Debut");
 		lblPrnom.setBounds(93, 154, 89, 14);
 		contentPane.add(lblPrnom);
 		
-		date_debut = new JTextField();
-		date_debut.setBounds(166, 154, 104, 20);
-		contentPane.add(date_debut);
-		date_debut.setColumns(10);
-		
 		JLabel lblAdresse = new JLabel("Description");
-		lblAdresse.setBounds(439, 155, 89, 14);
+		lblAdresse.setBounds(458, 154, 89, 14);
 		contentPane.add(lblAdresse);
 		
 		description = new JTextArea();
-		description.setBounds(531, 154, 139, 77);
+		description.setBounds(544, 153, 139, 77);
 		contentPane.add(description);
 		
 		JLabel lblDateFin = new JLabel("Date Fin");
-		lblDateFin.setBounds(270, 155, 89, 14);
+		lblDateFin.setBounds(289, 154, 89, 14);
 		contentPane.add(lblDateFin);
 		
-		date_fin = new JTextField();
-		date_fin.setColumns(10);
-		date_fin.setBounds(329, 154, 111, 20);
-		contentPane.add(date_fin);
+
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 int row = table.getSelectedRow();
 				 id.setText( table.getValueAt(row, 0).toString());
-				 date_debut.setText(table.getValueAt(row, 1).toString());
-				 date_fin.setText(table.getValueAt(row, 2).toString());
+				 date_debut.setDate((Date) table.getValueAt(row, 2));
+				 date_fin.setDate((Date) table.getValueAt(row, 2));
 				 description.setText(table.getValueAt(row, 3).toString());
 			} 
 		});
@@ -253,9 +219,6 @@ public class FrameEvenement extends JFrame {
 		
 
 		 id.setText("");
-	
-		 date_debut.setText("");
-		 date_fin.setText("");
 		 description.setText("");
 		 
 	}
