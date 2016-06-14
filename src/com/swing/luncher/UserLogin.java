@@ -21,7 +21,6 @@ import com.swing.luncher.FrameWelcome;
 import com.swing.variableSession.VariableSession;
 
 import delegate.CommanServiceDelegate;
-import delegate.MailDelegate;
 import delegate.UserServiceDelegate;
 
 class UserLogin extends JFrame {
