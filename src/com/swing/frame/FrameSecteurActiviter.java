@@ -52,7 +52,7 @@ public class FrameSecteurActiviter extends JFrame {
 	 * Create the frame.
 	 * @param jMenuBar 
 	 */
-	
+//	
 	public FrameSecteurActiviter(JMenuBar jMenuBar) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

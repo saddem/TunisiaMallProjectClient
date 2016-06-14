@@ -4,7 +4,7 @@ import com.esprit.comman.CommanServiceRemote;
 
 import locator.ServiceLocator;
 
-public class CommandeActiviterServiceeDelegate {
+public class CommandeServiceeDelegate {
 	private static String jndiName="/ejbTest/CommanService!com.esprit.comman.CommanServiceRemote";
 	//								ejb:/ejbTest/UserService!com.esprit.service.UserServiceRemote
 

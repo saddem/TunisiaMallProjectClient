@@ -19,8 +19,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import com.esprit.entity.Commande;
+import com.swing.luncher.FrameWelcome;
 import com.swing.modelData.ModelCommande;
 import delegate.CommanServiceDelegate;
+import delegate.CommandeServiceeDelegate;
+
 import javax.swing.JFormattedTextField;
 import com.toedter.components.JLocaleChooser;
 import com.toedter.calendar.JDayChooser;
@@ -30,12 +33,13 @@ public class FrameCommande extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField id;
-	private DateFormat dd;
-	private DateFormat dt;
-	private DateFormat dl;
+	private JDateChooser dd;
+	private JDateChooser dt;
+	private JDateChooser dl;
 	private JTextField etat;
 	private JTable table;
 	private ModelCommande modele;
+	
 	
 
 	/**
@@ -71,9 +75,9 @@ public class FrameCommande extends JFrame {
 		lbldd.setBounds(90, 157, 71, 14);
 		contentPane.add(lbldd);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(171, 157, 87, 20);
-		contentPane.add(dateChooser);
+		 dd = new JDateChooser();
+		dd.setBounds(171, 157, 87, 20);
+		contentPane.add(dd);
 		
 
 		
@@ -82,9 +86,9 @@ public class FrameCommande extends JFrame {
 		lbldt.setBounds(216, 197, 78, 14);
 		contentPane.add(lbldt);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(439, 157, 87, 20);
-		contentPane.add(dateChooser_1);
+		 dt = new JDateChooser();
+		dt.setBounds(439, 157, 87, 20);
+		contentPane.add(dt);
 		
 		
 		
@@ -92,9 +96,9 @@ public class FrameCommande extends JFrame {
 		lbldl.setBounds(358, 157, 71, 14);
 		contentPane.add(lbldl);
 		
-		JDateChooser dateChooser_2 = new JDateChooser();
-		dateChooser_2.setBounds(311, 197, 87, 20);
-		contentPane.add(dateChooser_2);
+		 dl = new JDateChooser();
+		dl.setBounds(311, 197, 87, 20);
+		contentPane.add(dl);
 		
 
 		
@@ -119,20 +123,21 @@ public class FrameCommande extends JFrame {
 				Commande c=new Commande();
 				
 				if(!id.getText().isEmpty()&&id.getText().equals(""))
+					
 				c.setId(Integer.parseInt(id.getText()));
-				c.setDateDemande(dateChooser.getDate());
-				c.setDateTraitement(dateChooser_1.getDate());
-				c.setDateLivraison(dateChooser_2.getDate());
+				c.setDateDemande(dd.getDate());
+				c.setDateTraitement(dt.getDate());
+				c.setDateLivraison(dl.getDate());
 				c.setEtat(etat.getText());
 		
 	
 						
 				
 				/***********************/
-				
 				CommanServiceDelegate.getProxy().create(c);
-
+				
 				clearTextFieldsS();
+	
 				table.setModel(new ModelCommande());
 				
 			//	UserServiceDelagate.getProxy().deleteUser(user);
@@ -140,6 +145,7 @@ public class FrameCommande extends JFrame {
 			}
 		});
 		
+	
 		
 		
 		Add.addActionListener(new ActionListener() {
@@ -148,6 +154,9 @@ public class FrameCommande extends JFrame {
 		});
 		Add.setBounds(160, 240, 89, 23);
 		contentPane.add(Add);
+		
+		
+		
 		
 		JButton Remove = new JButton("Remove");
 		Remove.addMouseListener(new MouseAdapter() {
@@ -176,9 +185,9 @@ public class FrameCommande extends JFrame {
 				/***********************/
 				Commande c=new Commande();
 				c.setId(Integer.parseInt(id.getText()));
-				c.setDateDemande(dateChooser.getDate());
-				c.setDateTraitement(dateChooser_1.getDate());
-				c.setDateLivraison(dateChooser_2.getDate());
+				c.setDateDemande(dd.getDate());
+				c.setDateTraitement(dt.getDate());
+				c.setDateLivraison(dl.getDate());
 				c.setEtat(etat.getText());
 	
 				
@@ -209,6 +218,16 @@ public class FrameCommande extends JFrame {
 		scrollPane.setBounds(20, 11, 622, 104);
 		contentPane.add(scrollPane);
 		
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				 new FrameWelcome();
+			}
+		});
+		btnRetour.setBounds(574, 240, 89, 23);
+		contentPane.add(btnRetour);
+		
 		
 		
 		
@@ -223,9 +242,9 @@ public class FrameCommande extends JFrame {
 				 int row = table.getSelectedRow();
 
 				 id.setText( table.getValueAt(row, 0).toString());
-				 dateChooser.setDate((Date) table.getValueAt(row, 1));
-				 dateChooser_1.setDate((Date) table.getValueAt(row, 2));
-				 dateChooser_2.setDate((Date) table.getValueAt(row, 3));
+				// dd.setDate((Date) table.getValueAt(row, 1));
+				 //dt.setDate((Date) table.getValueAt(row, 2));
+				 //dl.setDate((Date) table.getValueAt(row, 3));
 				 etat.setText(table.getValueAt(row, 4).toString());
 			} 
 		});
@@ -239,8 +258,9 @@ public class FrameCommande extends JFrame {
 		
 
 		 id.setText("");
-	
-		 
+		 dd.setCalendar(null);
+		 dt.setCalendar(null);
+		 dl.setCalendar(null);
 		 etat.setText("");
 		 
 	}
