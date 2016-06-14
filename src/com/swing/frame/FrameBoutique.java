@@ -44,7 +44,7 @@ public class FrameBoutique extends JFrame {
 	 * @param jMenuBar 
 	 */
 	public FrameBoutique(JMenuBar jMenuBar) {
-		
+		setTitle("Boutique");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 433);
 		//setJMenuBar(new FrameMenu().Menu());

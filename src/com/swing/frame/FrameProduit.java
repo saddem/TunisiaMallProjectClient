@@ -51,7 +51,7 @@ public class FrameProduit extends JFrame {
 	private JTextField textDescription;
 
 	public FrameProduit(JMenuBar jMenuBar) {
-		
+		setTitle("Produit");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 433);
 		//setJMenuBar(new FrameMenu().Menu());

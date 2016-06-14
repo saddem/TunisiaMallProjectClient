@@ -53,7 +53,7 @@ public class FrameSousCategorie extends JFrame {
 	 */
 	
 	public FrameSousCategorie(JMenuBar jMenuBar) {
-		
+		setTitle("Sous Categorie");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 335);
 		setJMenuBar(jMenuBar);

@@ -52,7 +52,7 @@ public class FrameProfile extends JFrame {
 	 * @param jMenuBar 
 	 */
 	public FrameProfile(JMenuBar jMenuBar) {
-		
+		setTitle("Profile");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 433);
 		//setJMenuBar(new FrameMenu().Menu());

@@ -21,6 +21,7 @@ import com.swing.luncher.FrameWelcome;
 import com.swing.variableSession.VariableSession;
 
 import delegate.CommanServiceDelegate;
+import delegate.MailDelegate;
 import delegate.UserServiceDelegate;
 
 class UserLogin extends JFrame {
@@ -62,7 +63,7 @@ class UserLogin extends JFrame {
 		// production code since it may not display correctly for
 		// a look-and-feel.
 
-		setTitle("Tabbed Pane Application");
+		setTitle("Bienvenu au tunisia mall version test 1.0");
 		setSize(800, 500);
 		setBackground(Color.gray);
 
@@ -237,10 +238,42 @@ class UserLogin extends JFrame {
 
 				u.setPassword(new String(pwd.getPassword()));
 
-				/***********************/
+			
 				u.setApprouver("en attente");
 				u.setDemande(true);
-				System.out.println(listSecteurActivite.getSelectedValue().toString());
+				
+				SuperAdmin u2 = new SuperAdmin();
+				/***********************/
+				u2.setLogin(login.getText());
+				u2.setPassword(new String(pwd.getPassword()));
+
+				/***********************/
+				
+				Client u3 = new Client();
+
+				u3.setLogin(login.getText());
+				u3.setPassword(new String(pwd.getPassword()));
+
+				/***********************/
+				
+			
+				u.setDemande(true);
+
+				SuperAdmin superAdmin = (SuperAdmin) UserServiceDelegate.getProxy().auth(u2);
+				Client client = (Client) UserServiceDelegate.getProxy().auth(u);
+				ShopOwner shopOwner = (ShopOwner) UserServiceDelegate.getProxy().auth(u);
+				
+				if((client!=null)||(shopOwner!=null)||(superAdmin!=null)){
+					
+					JOptionPane optionPane = new JOptionPane("Login Invalide", JOptionPane.NO_OPTION);
+					JDialog dialog = optionPane.createDialog("Warning!");
+					dialog.setAlwaysOnTop(true);
+					dialog.setVisible(true);
+					
+				}else{
+					
+				
+				//	MailDelegate.getProxy().msg(u.getEmail(), "Demande Shop Owner", "MR : "+u.getNom()+" "+u.getPrenom()+" veut loué Numéro:" + u.getBoutique().getNum());
 				u.setSecteurActiviter((SecteurActivite) CommanServiceDelegate.getProxy().findById(new SecteurActivite(),
 						"libelle", "'" + listSecteurActivite.getSelectedValue().toString() + "'"));
 
@@ -254,9 +287,11 @@ class UserLogin extends JFrame {
 				clearTextFieldsS();
 
 				JOptionPane optionPane = new JOptionPane("Votre Demande à était Bient envoyer", JOptionPane.YES_OPTION);
-				JDialog dialog = optionPane.createDialog("Warning!");
+				JDialog dialog = optionPane.createDialog("OK!");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
+				
+				}
 
 			}
 		});

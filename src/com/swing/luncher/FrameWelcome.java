@@ -27,6 +27,8 @@ import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
 import com.swing.frame.FrameSousCategorie;
 import com.swing.variableSession.VariableSession;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class FrameWelcome extends JFrame {
@@ -80,17 +82,25 @@ public class FrameWelcome extends JFrame {
 		public  JMenuBar Menu(){
 
 			 JMenuBar menubar = new JMenuBar();
-			 JMenu gestion = new JMenu("Gestion ");
-			 menubar.add(gestion);
-			
+			 JMenu gestion = new JMenu("Gestion Utilisateur et profile");
+			 JMenu gestion2 = new JMenu("Gestion Centre");
+			 JMenu gestion3 = new JMenu("ProdCommandeEven");
+		
+			 
 			 gestion.setMnemonic(KeyEvent.VK_F);
+			 
 			 JMenuItem userItem = new JMenuItem("user");
-			 JMenuItem userItem2 = new JMenuItem("Secteur d'activiter");
 			 JMenuItem userItem3 = new JMenuItem("profile");
-			 JMenuItem userItem4 = new JMenuItem("Boutique");
 			 JMenuItem userItem5 = new JMenuItem("Shop Owner");
+			 
+			 
+			 JMenuItem userItem2 = new JMenuItem("Secteur d'activiter");
+			 JMenuItem userItem4 = new JMenuItem("Boutique");
 			 JMenuItem userItem6 = new JMenuItem("Categorie");
+			 
+			 
 			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
+			 
 			 JMenuItem userItem8 = new JMenuItem("Evenement");
 			 JMenuItem userItem9 = new JMenuItem("Produit");
 			 JMenuItem userItem10 = new JMenuItem("Commandes");
@@ -169,22 +179,40 @@ public class FrameWelcome extends JFrame {
 			 
 		
 			 gestion.add(userItem);
-			 gestion.add(userItem2);
+		
 			 gestion.add(userItem3);
-			 gestion.add(userItem4);
+		
 			 gestion.add(userItem5);
-			 gestion.add(userItem6);
+		
 			
 			if (VariableSession.getCurrentUser()  instanceof ShopOwner) {
 				 gestion.add(userItem7);
 			}
 			 
-			 gestion.add(userItem8);
-			 gestion.add(userItem9);
-			 gestion.add(userItem10);
+			 gestion3.add(userItem8);
+			 gestion3.add(userItem9);
+			 gestion3.add(userItem10);
+			 
+			 gestion2.add(userItem2);
+			 gestion2.add(userItem4);
+			 gestion2.add(userItem6);
+			 
 			 menubar.add(gestion);
+			 menubar.add(gestion2);
+			 menubar.add(gestion3);
 			 
-			 
+			  JMenuItem exit = new JMenuItem("Logout");
+			  exit.addMouseListener(new MouseAdapter() {
+			  	@Override
+			  	public void mouseClicked(MouseEvent arg0) {
+			  		dispose();
+			  		UserLogin f=new UserLogin();
+			  		f.setVisible(true);
+			  	}
+			  	
+			  });
+			 // exit.addActionListener((ActionListener) new UserLogin());
+			  menubar.add(exit);
 			
 			 return (menubar);
 			

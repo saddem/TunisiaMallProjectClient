@@ -53,7 +53,7 @@ public class FrameShopOwner extends JFrame {
 	 * @param jMenuBar 
 	 */
 	public FrameShopOwner(JMenuBar jMenuBar) {
-		
+		setTitle("Shop Owner");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 433);
 		//setJMenuBar(new FrameMenu().Menu());

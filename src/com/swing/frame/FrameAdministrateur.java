@@ -51,7 +51,7 @@ public class FrameAdministrateur extends JFrame {
 	 * @param jMenuBar 
 	 */
 	public FrameAdministrateur(JMenuBar jMenuBar) {
-		
+		setTitle("Administrateur");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 433);
 		//setJMenuBar(new FrameMenu().Menu());
