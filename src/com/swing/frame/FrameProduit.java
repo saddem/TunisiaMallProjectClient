@@ -4,7 +4,10 @@ package com.swing.frame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.esprit.entity.Categorie;
 import com.esprit.entity.Produit;
+import com.esprit.entity.SousCategorie;
 import com.swing.modelData.ModelProduit;
 import delegate.CommanServiceDelegate;
 import javax.swing.JLabel;
@@ -16,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,11 +39,12 @@ public class FrameProduit extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private ModelProduit modele;
+	private ModelProduit modelproduit;
 	private JTextField prht;
 	private JTextField libelle;
 	private JTextField txtid;
 	private JList listSousCategorie ;
+	private JList listCategorie;
 	private JList listeboutique ;
 	private JTextField txtTva;
 	private JTextField txtqte;
@@ -64,14 +69,14 @@ public class FrameProduit extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				Produit p=new Produit();
+
+				p.setQuantite(Integer.parseInt(txtqte.getText()));
+				p.setPrixHt(Integer.parseInt(prht.getText()));// To float
+				p.setTva(Integer.parseInt(txtTva.getText()));// To float
+				p.setDescription(textDescription.getText());
+				p.setId(Integer.parseInt(txtid.getText()));
 				//p.setSouscategories(listSousCategorie.getSelectedValue().toString());
 				//p.setBoutique(listeboutique.getSelectedValue().toString());
-				
-				p.setQuantite(Integer.parseInt(txtqte.getText()));
-				p.setLibelle(prht.getText());
-				p.setLibelle(txtTva.getText());
-				p.setLibelle(libelle.getText());
-				p.setDescription(textDescription.getText());
 				
 				CommanServiceDelegate.getProxy().create(p);
 				clearTextFieldsS();
@@ -92,7 +97,6 @@ public class FrameProduit extends JFrame {
 		Remove.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-			
 				CommanServiceDelegate.getProxy().delete(new Produit(),"id",txtid.getText()+"");
 				clearTextFieldsS();
 				table.clearSelection();
@@ -126,7 +130,7 @@ public class FrameProduit extends JFrame {
 		Update.setBounds(413, 335, 89, 23);
 		contentPane.add(Update);
 		
-		modele= new ModelProduit() ;
+		modelproduit= new ModelProduit() ;
 		table = new JTable(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -152,20 +156,20 @@ public class FrameProduit extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JLabel lblTl = new JLabel("Prix HT");
-		lblTl.setBounds(313, 163, 46, 14);
+		lblTl.setBounds(387, 163, 46, 14);
 		contentPane.add(lblTl);
 		
 		prht = new JTextField();
-		prht.setBounds(313, 188, 64, 20);
+		prht.setBounds(369, 188, 64, 20);
 		contentPane.add(prht);
 		prht.setColumns(10);
 		
 		JLabel lbltva = new JLabel("Libelle");
-		lbltva.setBounds(198, 163, 89, 14);
+		lbltva.setBounds(270, 163, 89, 14);
 		contentPane.add(lbltva);
 		
 		libelle = new JTextField();
-		libelle.setBounds(198, 188, 105, 20);
+		libelle.setBounds(254, 188, 105, 20);
 		contentPane.add(libelle);
 		libelle.setColumns(10);
 		
@@ -179,48 +183,60 @@ public class FrameProduit extends JFrame {
 		lblId.setBounds(142, 163, 27, 14);
 		contentPane.add(lblId);
 		
-		DefaultListModel modelList =  new DefaultListModel();
-	
-		modelList.addElement("Vide");
-		modelList.addElement("en négociation");
-		modelList.addElement("Loué");
-		listSousCategorie = new JList(modelList);
+		DefaultListModel modelListsous =  new DefaultListModel();
+		ArrayList<SousCategorie> souscategorie=CommanServiceDelegate.getProxy().findAll(new SousCategorie());
+		for (int i = 0; i < souscategorie.size(); i++) {
+			modelListsous.addElement(souscategorie.get(i).getLibelle());
+		}
+		
+		listSousCategorie = new JList(modelListsous);
 		listSousCategorie.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSousCategorie.setSelectedIndex(0);
-		listSousCategorie.setBounds(10, 184, 122, 69);
+		listSousCategorie.setBounds(10, 295, 122, 69);
 		contentPane.add(listSousCategorie);
 		
+		
 		JLabel lblsouscat = new JLabel("Sous Categorie");
-		lblsouscat.setBounds(10, 163, 122, 14);
+		lblsouscat.setBounds(10, 270, 122, 14);
 		contentPane.add(lblsouscat);
 		
 		txtTva = new JTextField();
 		txtTva.setColumns(10);
-		txtTva.setBounds(387, 188, 46, 20);
+		txtTva.setBounds(443, 188, 46, 20);
 		contentPane.add(txtTva);
 		
 		JLabel lblTva = new JLabel("Tva %");
-		lblTva.setBounds(387, 163, 57, 14);
+		lblTva.setBounds(443, 163, 57, 14);
 		contentPane.add(lblTva);
 		
 		txtqte = new JTextField();
 		txtqte.setColumns(10);
-		txtqte.setBounds(443, 188, 57, 20);
+		txtqte.setBounds(503, 188, 57, 20);
 		contentPane.add(txtqte);
 		
 		JLabel Qte = new JLabel("Quantite");
-		Qte.setBounds(443, 163, 46, 14);
+		Qte.setBounds(514, 163, 46, 14);
 		contentPane.add(Qte);
 		
-		JList listebproduit = new JList((ListModel) null);
-		listebproduit.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listebproduit.setSelectedIndex(0);
-		listebproduit.setBounds(10, 289, 122, 69);
-		contentPane.add(listebproduit);
+
+		DefaultListModel modelListcateg =  new DefaultListModel();
+		ArrayList<Categorie> categorie=CommanServiceDelegate.getProxy().findAll(new Categorie());
+		for (int i = 0; i < categorie.size(); i++) {
+			modelListcateg.addElement(categorie.get(i).getLibelle());
+		}
 		
-		JLabel lblProduit = new JLabel("Produit");
-		lblProduit.setBounds(10, 264, 122, 14);
-		contentPane.add(lblProduit);
+		listCategorie = new JList(modelListcateg);
+		listCategorie.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listCategorie.setSelectedIndex(0);
+		listCategorie.setBounds(10, 190, 122, 69);
+		contentPane.add(listCategorie);
+		
+		
+		
+		
+		JLabel lblCategorie = new JLabel("Categorie");
+		lblCategorie.setBounds(10, 163, 122, 14);
+		contentPane.add(lblCategorie);
 		
 		JLabel description = new JLabel("Description de Produit");
 		description.setBounds(142, 241, 145, 14);
@@ -228,7 +244,7 @@ public class FrameProduit extends JFrame {
 		
 		textDescription = new JTextField();
 		textDescription.setColumns(10);
-		textDescription.setBounds(254, 233, 246, 45);
+		textDescription.setBounds(314, 239, 246, 45);
 		contentPane.add(textDescription);
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {

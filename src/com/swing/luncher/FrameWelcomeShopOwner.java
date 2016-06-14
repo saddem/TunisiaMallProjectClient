@@ -16,6 +16,7 @@ import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
 import com.swing.frame.FrameEvenement;
+import com.swing.frame.FrameProduit;
 import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
@@ -33,25 +34,23 @@ public class FrameWelcomeShopOwner extends JFrame {
 
 	
 	 FrameProfile frameProfile;
-	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
+	 FrameProduit frameProduit;
 	 
 	 
 	 void disableFrame(){
 		 setVisible(false); 
 		 
-		
-		 
 		 if (frameProfile!=null){
 			 frameProfile.setVisible(false);
 		 }
-		 
-		
-		 if (frameCategorie!=null){
-			 frameCategorie.setVisible(false);
-		 }
+
 		 if (frameSousCategorie!=null){
 			 frameSousCategorie.setVisible(false);
+		 }
+		 
+		 if (frameProduit!=null){
+			 frameProduit.setVisible(false);
 		 }
 		
 		 
@@ -68,14 +67,14 @@ public class FrameWelcomeShopOwner extends JFrame {
 			
 			 gestion.setMnemonic(KeyEvent.VK_F);
 			 
-			 JMenuItem userItem3 = new JMenuItem("profile");
-			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
-			 
+			 JMenuItem userItem1 = new JMenuItem("profile");
+			 JMenuItem userItem2 = new JMenuItem("Sous Categorie");
+			 JMenuItem userItem3 = new JMenuItem("Produit");
 			
 
 			
 
-			 userItem3.addActionListener(new ActionListener() {
+			 userItem1.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
 					 frameProfile=new FrameProfile(Menu());
@@ -84,7 +83,7 @@ public class FrameWelcomeShopOwner extends JFrame {
 
 			
 
-			 userItem7.addActionListener(new ActionListener() {
+			 userItem2.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
 					 frameSousCategorie=new FrameSousCategorie(Menu());
@@ -95,18 +94,15 @@ public class FrameWelcomeShopOwner extends JFrame {
 			 userItem3.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
-					 frameProfile=new FrameProfile(Menu());
-					 frameProfile.setVisible(true);
+					 frameProduit=new FrameProduit(Menu());
+					 frameProduit.setVisible(true);
 				 }});
+			 
 		
-			 //gestion.add(userItem);
-			 //gestion.add(userItem2);
+			 
+			 gestion.add(userItem1);
+			 gestion.add(userItem2);
 			 gestion.add(userItem3);
-		
-			 //gestion.add(userItem5);
-		
-			 gestion.add(userItem7);
-			 //gestion.add(userItem8);
 			 menubar.add(gestion);
 			 
 			 
