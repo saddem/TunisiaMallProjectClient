@@ -25,6 +25,8 @@ import javax.swing.JFormattedTextField;
 import com.toedter.components.JLocaleChooser;
 import com.toedter.calendar.JDayChooser;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JScrollBar;
+import javax.swing.JComboBox;
 
 public class FrameCommande extends JFrame {
 	
@@ -33,7 +35,7 @@ public class FrameCommande extends JFrame {
 	private DateFormat dd;
 	private DateFormat dt;
 	private DateFormat dl;
-	private JTextField etat;
+	private String[] petStrings = { "En cours", "En Attente", "Valider", "Annuler" };
 	private JTable table;
 	private ModelCommande modele;
 	
@@ -68,7 +70,7 @@ public class FrameCommande extends JFrame {
 		id.setColumns(10);
 		
 		JLabel lbldd = new JLabel("Date Demande");
-		lbldd.setBounds(90, 157, 71, 14);
+		lbldd.setBounds(90, 157, 87, 14);
 		contentPane.add(lbldd);
 		
 		JDateChooser dateChooser = new JDateChooser();
@@ -79,17 +81,17 @@ public class FrameCommande extends JFrame {
 		
 		
 		JLabel lbldt = new JLabel("Date Traitement");
-		lbldt.setBounds(216, 197, 78, 14);
+		lbldt.setBounds(216, 197, 101, 14);
 		contentPane.add(lbldt);
 		
 		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(439, 157, 87, 20);
+		dateChooser_1.setBounds(419, 157, 87, 20);
 		contentPane.add(dateChooser_1);
 		
 		
 		
 		JLabel lbldl = new JLabel("Date Livraison");
-		lbldl.setBounds(358, 157, 71, 14);
+		lbldl.setBounds(334, 157, 87, 14);
 		contentPane.add(lbldl);
 		
 		JDateChooser dateChooser_2 = new JDateChooser();
@@ -100,12 +102,13 @@ public class FrameCommande extends JFrame {
 		
 
 		JLabel lblEtat = new JLabel("Etat");
-		lblEtat.setBounds(564, 157, 65, 14);
+		lblEtat.setBounds(536, 157, 40, 14);
 		contentPane.add(lblEtat);
 		
-		etat = new JTextField();
-		etat.setBounds(597, 154, 40, 20);
-		contentPane.add(etat);
+		
+		JComboBox comboBox = new JComboBox(petStrings);
+		comboBox.setBounds(565, 154, 77, 20);
+		contentPane.add(comboBox);
 		
 		
 		
@@ -123,7 +126,8 @@ public class FrameCommande extends JFrame {
 				c.setDateDemande(dateChooser.getDate());
 				c.setDateTraitement(dateChooser_1.getDate());
 				c.setDateLivraison(dateChooser_2.getDate());
-				c.setEtat(etat.getText());
+				c.setEtat((String) comboBox.getSelectedItem());
+				
 		
 	
 						
@@ -179,7 +183,8 @@ public class FrameCommande extends JFrame {
 				c.setDateDemande(dateChooser.getDate());
 				c.setDateTraitement(dateChooser_1.getDate());
 				c.setDateLivraison(dateChooser_2.getDate());
-				c.setEtat(etat.getText());
+				c.setEtat((String) comboBox.getSelectedItem());
+				
 	
 				
 				
@@ -215,6 +220,8 @@ public class FrameCommande extends JFrame {
 		
 		
 		
+		
+		
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -226,7 +233,7 @@ public class FrameCommande extends JFrame {
 				 dateChooser.setDate((Date) table.getValueAt(row, 1));
 				 dateChooser_1.setDate((Date) table.getValueAt(row, 2));
 				 dateChooser_2.setDate((Date) table.getValueAt(row, 3));
-				 etat.setText(table.getValueAt(row, 4).toString());
+				// etat.setText(table.getValueAt(row, 4).toString());
 			} 
 		});
 	/*********************************************************/	
@@ -241,7 +248,7 @@ public class FrameCommande extends JFrame {
 		 id.setText("");
 	
 		 
-		 etat.setText("");
+		 //etat.setText("");
 		 
 	}
 	}
