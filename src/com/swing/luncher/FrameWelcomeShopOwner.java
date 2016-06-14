@@ -32,46 +32,28 @@ public class FrameWelcomeShopOwner extends JFrame {
 	private JPanel contentPane;
 
 	
-
-	 FrameSecteurActiviter frameSecteurActiviter;
-	 FrameAdministrateur frameAdministrateur;
 	 FrameProfile frameProfile;
-	 FrameBoutique frameBoutique;
-	 FrameShopOwner frameShopOwner;
 	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
-	 FrameEvenement frameEvenement;
+	 
 	 
 	 void disableFrame(){
 		 setVisible(false); 
 		 
-		 if (frameAdministrateur!=null){
-			 frameAdministrateur.setVisible(false);
-		 }
-		 
-		 if (frameSecteurActiviter!=null){
-			 frameSecteurActiviter.setVisible(false);
-		 }
+		
 		 
 		 if (frameProfile!=null){
 			 frameProfile.setVisible(false);
 		 }
 		 
-		 if (frameBoutique!=null){
-			 frameBoutique.setVisible(false);
-		 }
-		 if (frameShopOwner!=null){
-			 frameShopOwner.setVisible(false);
-		 }
+		
 		 if (frameCategorie!=null){
 			 frameCategorie.setVisible(false);
 		 }
 		 if (frameSousCategorie!=null){
 			 frameSousCategorie.setVisible(false);
 		 }
-		 if (frameEvenement!=null){
-			 frameEvenement.setVisible(false);
-		 }
+		
 		 
 	 }
 	 FrameWelcomeShopOwner frameWelcome;
@@ -85,27 +67,13 @@ public class FrameWelcomeShopOwner extends JFrame {
 			
 			
 			 gestion.setMnemonic(KeyEvent.VK_F);
-			 JMenuItem userItem = new JMenuItem("user");
-			 JMenuItem userItem2 = new JMenuItem("Secteur d'activiter");
+			 
 			 JMenuItem userItem3 = new JMenuItem("profile");
-			 JMenuItem userItem4 = new JMenuItem("Boutique");
-			 JMenuItem userItem5 = new JMenuItem("Shop Owner");
-			 JMenuItem userItem6 = new JMenuItem("Categorie");
 			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
-			 JMenuItem userItem8 = new JMenuItem("Evenement");
-			 userItem.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent event) {
-					 disableFrame();
-					 frameAdministrateur=new FrameAdministrateur(Menu()); 
-					 frameAdministrateur.setVisible(true);
-				 }});
+			 
+			
 
-			 userItem2.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent event) {
-					 disableFrame();
-					 frameSecteurActiviter=new FrameSecteurActiviter(Menu());
-					 frameSecteurActiviter.setVisible(true);
-				 }});
+			
 
 			 userItem3.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
@@ -114,46 +82,29 @@ public class FrameWelcomeShopOwner extends JFrame {
 					 frameProfile.setVisible(true);
 				 }});
 
-			 userItem4.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent event) {
-					 disableFrame();
-					 frameBoutique=new FrameBoutique(Menu());
-					 frameBoutique.setVisible(true);
-				 }});
+			
 
-
-			 userItem5.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent event) {
-					 disableFrame();
-					 frameShopOwner=new FrameShopOwner(Menu());
-					 frameShopOwner.setVisible(true);
-				 }});
-			 
-			 userItem6.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent event) {
-					 disableFrame();
-					 frameCategorie=new FrameCategorie(Menu());
-					 frameCategorie.setVisible(true);
-				 }});
 			 userItem7.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
 					 frameSousCategorie=new FrameSousCategorie(Menu());
 					 frameSousCategorie.setVisible(true);
 				 }});
-			 userItem8.addActionListener(new ActionListener() {
+			
+			 
+			 userItem3.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
-					 frameEvenement=new FrameEvenement(Menu());
-					 frameEvenement.setVisible(true);
+					 frameProfile=new FrameProfile(Menu());
+					 frameProfile.setVisible(true);
 				 }});
 		
 			 //gestion.add(userItem);
 			 //gestion.add(userItem2);
 			 gestion.add(userItem3);
-			 gestion.add(userItem4);
+		
 			 //gestion.add(userItem5);
-			 gestion.add(userItem6);
+		
 			 gestion.add(userItem7);
 			 //gestion.add(userItem8);
 			 menubar.add(gestion);

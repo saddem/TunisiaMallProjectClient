@@ -1,0 +1,13 @@
+Patie 1 Configuration de base (Super Admin)
+1) Connexion Super Admin 
+2) Ajout Secteur d'activite	  
+3)Categorie
+4) Boutique
+Partie 2 Configuration de Base(Shop Owner)
+1)Demande Inscription
+Partie 3 (super Admin)
+1)Validation Shop owner ;
+Partie 4
+1)Connexion Shop Owner
+2)Ajout Sous Catégorie 
+3)Ajout PRoduits 

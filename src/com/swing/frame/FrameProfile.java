@@ -8,12 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.esprit.entity.Client;
+import com.esprit.entity.ShopOwner;
 import com.esprit.entity.SuperAdmin;
 import com.esprit.entity.Utilisateur;
 
 import com.swing.modelData.ModelAdministrateur;
 import com.swing.variableSession.VariableSession;
 
+import delegate.CommanServiceDelegate;
 import delegate.UserServiceDelegate;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -70,36 +73,43 @@ public class FrameProfile extends JFrame {
 		contentPane.add(lblName);
 		
 		JButton Update = new JButton("Update");
+		Update.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		Update.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				/***********************/
-				SuperAdmin u=new SuperAdmin();
 				
+			
 		
-				u.setNom(nom.getText());
-				u.setEmail(email.getText());
-				u.setLogin(login.getText());
-				u.setAdresse(adress.getText());
-				u.setTel(tel.getText());
-				u.setPrenom(prenom.getText());				
-				u.setLogin(login.getText());			
+				VariableSession.getCurrentUser().setNom(nom.getText());
+				VariableSession.getCurrentUser().setEmail(email.getText());
+				VariableSession.getCurrentUser().setLogin(login.getText());
+				VariableSession.getCurrentUser().setAdresse(adress.getText());
+				VariableSession.getCurrentUser().setTel(tel.getText());
+				VariableSession.getCurrentUser().setPrenom(prenom.getText());				
+				VariableSession.getCurrentUser().setLogin(login.getText());			
 				
 				
-				u.setPassword(new String(pwd.getPassword()));
+				VariableSession.getCurrentUser().setPassword(new String(pwd.getPassword()));
 				
 				/***********************/
 				
+;
+				System.out.println(VariableSession.getCurrentUser().getLogin());
 				
-				Utilisateur u2= new Utilisateur();
-				u2=VariableSession.getCurrentUser();
+				if (VariableSession.getCurrentUser() instanceof SuperAdmin)
+				CommanServiceDelegate.getProxy().update((SuperAdmin)VariableSession.getCurrentUser());
+				
+				
+				if (VariableSession.getCurrentUser() instanceof ShopOwner)
+					CommanServiceDelegate.getProxy().update((ShopOwner)VariableSession.getCurrentUser());
 			
-				u.setEnabled(u2.isEnabled());
-				u.setId(u2.getId());
-				
-				UserServiceDelegate.getProxy().update(u);
-				
-				
+				if (VariableSession.getCurrentUser() instanceof Client)
+					CommanServiceDelegate.getProxy().update((Client)VariableSession.getCurrentUser());
+			
 			
 				
 		
