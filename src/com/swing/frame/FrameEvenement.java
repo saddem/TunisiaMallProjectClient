@@ -59,13 +59,7 @@ public class FrameEvenement extends JFrame {
 	 */
 	
 	public FrameEvenement(JMenuBar jMenuBar) {
-		JDateChooser date_debut = new JDateChooser();
-		date_debut.setBounds(168, 154, 115, 26);
-		contentPane.add(date_debut);
 		
-		JDateChooser date_fin = new JDateChooser();
-		date_fin.setBounds(342, 154, 115, 26);
-		contentPane.add(date_fin);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 335);
@@ -86,7 +80,13 @@ public class FrameEvenement extends JFrame {
 		id.setColumns(10);
 		
 		JButton Add = new JButton("Add");
+		JDateChooser date_debut = new JDateChooser();
+		date_debut.setBounds(168, 154, 115, 26);
+		contentPane.add(date_debut);
 		
+		JDateChooser date_fin = new JDateChooser();
+		date_fin.setBounds(342, 154, 115, 26);
+		contentPane.add(date_fin);
 		Add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
