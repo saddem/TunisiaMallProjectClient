@@ -42,7 +42,6 @@ public class FrameCommandeShopOwner extends JFrame {
 	private JTable table;
 	private ModelCommandeShopOwner modele;
 	
-
 	/**
 	 * Launch the application.
 

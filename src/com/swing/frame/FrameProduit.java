@@ -4,12 +4,17 @@ package com.swing.frame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import com.esprit.entity.Categorie;
 import com.esprit.entity.Produit;
+import com.esprit.entity.ShopOwner;
 import com.esprit.entity.SousCategorie;
+import com.esprit.entity.Utilisateur;
 import com.swing.modelData.ModelProduit;
+import com.swing.variableSession.VariableSession;
+
 import delegate.CommanServiceDelegate;
+import delegate.UserServiceDelegate;
+
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JTextField;
@@ -45,10 +50,12 @@ public class FrameProduit extends JFrame {
 	private JTextField txtid;
 	private JList listSousCategorie ;
 	private JList listCategorie;
-	private JList listeboutique ;
+
 	private JTextField txtTva;
 	private JTextField txtqte;
 	private JTextField textDescription;
+	
+	ShopOwner s = (ShopOwner)VariableSession.getInstance().getCurrentUser();
 
 	public FrameProduit(JMenuBar jMenuBar) {
 		setTitle("Produit");
@@ -69,15 +76,14 @@ public class FrameProduit extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				Produit p=new Produit();
-
 				p.setQuantite(Integer.parseInt(txtqte.getText()));
-				p.setPrixHt(Integer.parseInt(prht.getText()));// To float
-				p.setTva(Integer.parseInt(txtTva.getText()));// To float
+				p.setPrixHt(Float.parseFloat(prht.getText())); 
+				p.setTva(Float.parseFloat(txtTva.getText())); 
 				p.setDescription(textDescription.getText());
-				p.setId(Integer.parseInt(txtid.getText()));
-				//p.setSouscategories(listSousCategorie.getSelectedValue().toString());
-				//p.setBoutique(listeboutique.getSelectedValue().toString());
-				
+				p.setLibelle(libelle.getText());
+	
+				//p.setSouscategories((SousCategorie)CommanServiceDelegate.getProxy().findById(new SousCategorie(), "libelle",listSousCategorie.getSelectedValue().toString()));
+				 
 				CommanServiceDelegate.getProxy().create(p);
 				clearTextFieldsS();
 				table.setModel(new ModelProduit());
@@ -113,15 +119,19 @@ public class FrameProduit extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				
                 Produit p=new Produit();
-				//p.setNum(Integer.parseInt(libelle.getText()));
-				//p.setTel(prht.getText());
-		
 				Produit p2=new Produit();
 				p2=(Produit) CommanServiceDelegate.getProxy().findById(new Produit(), "id",txtid.getText() );
-				//p.setEtat( listSousCategorie.getSelectedValue().toString());
 				p.setId(p2.getId());
+				p.setQuantite(p2.getQuantite());
+				p.setPrixHt(p2.getPrixHt()); 
+				p.setTva(p2.getTva()); 
+				p.setDescription(p2.getDescription());
+				p.setLibelle(p2.getDescription());
+				p.setSouscategories(p2.getSouscategories());
+				 
+				
+				
 				CommanServiceDelegate.getProxy().update(p);
-	
 				clearTextFieldsS();
 				table.setModel(new ModelProduit());
 				
@@ -183,8 +193,16 @@ public class FrameProduit extends JFrame {
 		lblId.setBounds(142, 163, 27, 14);
 		contentPane.add(lblId);
 		
+		//find by req where c.shopowner.id= VariableSession "+ sous cetegorie = categorie.souscategorie.id
+		
 		DefaultListModel modelListsous =  new DefaultListModel();
-		ArrayList<SousCategorie> souscategorie=CommanServiceDelegate.getProxy().findAll(new SousCategorie());
+	
+		//ArrayList<SousCategorie> souscategorie=(ArrayList<SousCategorie>) CommanServiceDelegate.getProxy()
+		//.findById(new SousCategorie(),"id",s.getId().toString());
+		
+		ArrayList<SousCategorie> souscategorie=CommanServiceDelegate.getProxy()
+		.findAll(new SousCategorie());
+		
 		for (int i = 0; i < souscategorie.size(); i++) {
 			modelListsous.addElement(souscategorie.get(i).getLibelle());
 		}
@@ -192,12 +210,12 @@ public class FrameProduit extends JFrame {
 		listSousCategorie = new JList(modelListsous);
 		listSousCategorie.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSousCategorie.setSelectedIndex(0);
-		listSousCategorie.setBounds(10, 295, 122, 69);
+		listSousCategorie.setBounds(10, 188, 122, 176);
 		contentPane.add(listSousCategorie);
 		
 		
 		JLabel lblsouscat = new JLabel("Sous Categorie");
-		lblsouscat.setBounds(10, 270, 122, 14);
+		lblsouscat.setBounds(10, 163, 122, 14);
 		contentPane.add(lblsouscat);
 		
 		txtTva = new JTextField();
@@ -218,33 +236,34 @@ public class FrameProduit extends JFrame {
 		Qte.setBounds(514, 163, 46, 14);
 		contentPane.add(Qte);
 		
-
-		DefaultListModel modelListcateg =  new DefaultListModel();
-		ArrayList<Categorie> categorie=CommanServiceDelegate.getProxy().findAll(new Categorie());
-		for (int i = 0; i < categorie.size(); i++) {
-			modelListcateg.addElement(categorie.get(i).getLibelle());
+       /*
+		DefaultListModel modelListsouscateg =  new DefaultListModel();
+		//correct
+	    ArrayList<Categorie> souscategories=CommanServiceDelegate.getProxy().findReqList(new Categorie(), " secteurActivite.id="+s.getSecteurActiviter().getId());
+	
+		for (int i = 0; i < souscategories.size(); i++) {
+			modelListsouscateg.addElement(souscategories.get(i).getLibelle());
 		}
 		
-		listCategorie = new JList(modelListcateg);
+		listCategorie = new JList(modelListsouscateg);
 		listCategorie.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listCategorie.setSelectedIndex(0);
 		listCategorie.setBounds(10, 190, 122, 69);
 		contentPane.add(listCategorie);
 		
-		
-		
-		
 		JLabel lblCategorie = new JLabel("Categorie");
 		lblCategorie.setBounds(10, 163, 122, 14);
 		contentPane.add(lblCategorie);
 		
+		*/
+		
 		JLabel description = new JLabel("Description de Produit");
-		description.setBounds(142, 241, 145, 14);
+		description.setBounds(142, 232, 145, 14);
 		contentPane.add(description);
 		
 		textDescription = new JTextField();
 		textDescription.setColumns(10);
-		textDescription.setBounds(314, 239, 246, 45);
+		textDescription.setBounds(142, 261, 246, 45);
 		contentPane.add(textDescription);
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {
@@ -263,8 +282,7 @@ public class FrameProduit extends JFrame {
 	
 	public void clearTextFieldsS (){
 
-	   	 listSousCategorie.setSelectedIndex(0);
-	   	 listeboutique.setSelectedIndex(0);
+		 listSousCategorie.setSelectedIndex(0);
 		 txtid.setText("");		
 		 prht.setText("");
 		 libelle.setText("");

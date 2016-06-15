@@ -9,13 +9,12 @@ import delegate.CommanServiceDelegate;
 
 public class ModelProduit extends AbstractTableModel {
 
-	public  final String[] entetes = { "Id", "Libelle", "Description", "Prix HT", "Tva %", "Quantite", "Sous Categorie", "Boutique"};	
+	public  final String[] entetes = {"Id", "Libelle", "Description", "Prix HT", "Tva %", "Quantite", "Sous Categorie"};	
 	ArrayList<Produit> produits=(ArrayList<Produit>) CommanServiceDelegate.getProxy().findAll(new Produit());
 	
 	@Override
 	public int getColumnCount() {
 		return	entetes.length;
-		
 	}
 
 	@Override
@@ -54,9 +53,6 @@ public class ModelProduit extends AbstractTableModel {
 			
 		case 6:
 			return produits.get(rowIndex).getSouscategories();
-		
-		case 7:
-			return produits.get(rowIndex).getBoutique();
 			
 		default:
 			throw new IllegalArgumentException();
