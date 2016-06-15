@@ -224,7 +224,7 @@ class UserLogin extends JFrame {
 		JButton demande = new JButton("Envoyer Votre Demande");
 		demande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(validateFields()){
+				if(validateFieldsShopOnwer()){
 				/***********************/
 				ShopOwner u = new ShopOwner();
 
@@ -386,7 +386,7 @@ class UserLogin extends JFrame {
 		JButton demande = new JButton("Enregistre");
 		demande.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-			
+				if (validateFieldsShopOnwer()){
 					Client u = new Client();
 
 				u.setNom(nom.getText());
@@ -408,6 +408,7 @@ class UserLogin extends JFrame {
 				JDialog dialog = optionPane.createDialog("Warning!");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
+				}
 
 			}
 		});
@@ -480,7 +481,7 @@ class UserLogin extends JFrame {
 	}
 	
 	
-	private boolean validateFields() {
+	private boolean validateFieldsClient() {
 		if (nomClient.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, 
 					"Please enter To nom Client!",
@@ -518,16 +519,49 @@ class UserLogin extends JFrame {
 			return false;
 		}
 		
+		
+		return true;
+		}
+	
+	
+	
+	private boolean validateFieldsShopOnwer()	{
+		
+		
+		if (prenom.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter prenomClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			prenom.requestFocus();
+			return false;
+		}
+		
+		if (nom.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter prenomClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			prenom.requestFocus();
+			return false;
+		}
+		
+		
+		if (email.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter prenomClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			email.requestFocus();
+			return false;
+		}
+		
 		if (new String(listBoutique.getSelectedValue().toString()).equals("")) {
 			JOptionPane.showMessageDialog(this, 
 					"Please enter Boutique!",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			emailClient.requestFocus();
+			listBoutique.requestFocus();
 			return false;
 		}
-		
-		return true;
-		}
+	return true;	
+	}
 
 	// Main method to get things started
 	public static void main(String args[]) {
