@@ -69,7 +69,6 @@ public class FrameSecteurActiviter extends JFrame {
 		contentPane.add(lblId);
 		
 		id = new JTextField();
-		id.setEnabled(false);
 		id.setBounds(80, 154, 40, 20);
 		contentPane.add(id);
 		id.setColumns(10);

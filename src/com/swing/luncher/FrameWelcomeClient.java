@@ -15,8 +15,6 @@ import javax.swing.border.EmptyBorder;
 import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
-import com.swing.frame.FrameComander;
-import com.swing.frame.FrameCommandeClient;
 import com.swing.frame.FrameEvenement;
 import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
@@ -43,7 +41,6 @@ public class FrameWelcomeClient extends JFrame {
 	 FrameCategorie frameCategorie;
 	 FrameSousCategorie frameSousCategorie;
 	 FrameEvenement frameEvenement;
-	 FrameCommandeClient frameCommandeClient;
 	 
 	 void disableFrame(){
 		 setVisible(false); 
@@ -75,9 +72,6 @@ public class FrameWelcomeClient extends JFrame {
 		 if (frameEvenement!=null){
 			 frameEvenement.setVisible(false);
 		 }
-		 if (frameCommandeClient!=null){
-			 frameCommandeClient.setVisible(false);
-		 }
 		 
 	 }
 	 FrameWelcomeClient frameWelcome;
@@ -99,7 +93,6 @@ public class FrameWelcomeClient extends JFrame {
 			 JMenuItem userItem6 = new JMenuItem("Categorie");
 			 JMenuItem userItem7 = new JMenuItem("Sous Categorie");
 			 JMenuItem userItem8 = new JMenuItem("Evenement");
-			 JMenuItem userItem9 = new JMenuItem("Commandes");
 			 userItem.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
@@ -154,17 +147,9 @@ public class FrameWelcomeClient extends JFrame {
 					 frameEvenement=new FrameEvenement(Menu());
 					 frameEvenement.setVisible(true);
 				 }});
-			 
-			 userItem9.addActionListener(new ActionListener() {
-				 public void actionPerformed(ActionEvent event) {
-					 disableFrame();
-					 frameCommandeClient=new FrameCommandeClient(Menu());
-					 frameCommandeClient.setVisible(true);
-				 }});
 		
 
 			 gestion.add(userItem3);
-			 gestion.add(userItem9);
 
 			 menubar.add(gestion);
 			 

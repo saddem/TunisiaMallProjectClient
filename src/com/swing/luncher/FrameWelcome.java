@@ -20,12 +20,13 @@ import com.swing.frame.FrameCategorie;
 import com.swing.frame.FrameEvenement;
 import com.swing.frame.FrameProduit;
 
-import com.swing.frame.FrameCommandeShopOwner;
+import com.swing.frame.FrameCommande;
 
 import com.swing.frame.FrameProfile;
 import com.swing.frame.FrameSecteurActiviter;
 import com.swing.frame.FrameShopOwner;
 import com.swing.frame.FrameSousCategorie;
+import com.swing.frame.FrameSwingEmailSender;
 import com.swing.variableSession.VariableSession;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,10 +45,15 @@ public class FrameWelcome extends JFrame {
 	 FrameSousCategorie frameSousCategorie;
 	 FrameEvenement frameEvenement;
 	 FrameProduit frameProduit;
-	 FrameCommandeShopOwner frameCommande;
+	 FrameCommande frameCommande;
+	 FrameSwingEmailSender frameSwingEmailSender;
 
 	 void disableFrame(){
 		 setVisible(false); 
+		 
+		 if (frameSwingEmailSender!=null){
+			 frameSwingEmailSender.setVisible(false);
+		 }
 		 
 		 if (frameAdministrateur!=null){
 			 frameAdministrateur.setVisible(false);
@@ -85,9 +91,11 @@ public class FrameWelcome extends JFrame {
 			 JMenu gestion = new JMenu("Gestion Utilisateur et profile");
 			 JMenu gestion2 = new JMenu("Gestion Centre");
 			 JMenu gestion3 = new JMenu("ProdCommandeEven");
-		
+			 JMenu gestion4 = new JMenu("Utility");
 			 
 			 gestion.setMnemonic(KeyEvent.VK_F);
+			 
+			 JMenuItem userItem0= new JMenuItem("mail");
 			 
 			 JMenuItem userItem = new JMenuItem("user");
 			 JMenuItem userItem3 = new JMenuItem("profile");
@@ -173,18 +181,24 @@ public class FrameWelcome extends JFrame {
 			 userItem10.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent event) {
 					 disableFrame();
-					 frameCommande=new FrameCommandeShopOwner(Menu());
+					 frameCommande=new FrameCommande(Menu());
 					 frameCommande.setVisible(true);
 				 }});
 			 
 		
+			 userItem0.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent event) {
+					 disableFrame();
+					 frameSwingEmailSender=new FrameSwingEmailSender(Menu());
+					 frameSwingEmailSender.setVisible(true);
+				 }});
 			 gestion.add(userItem);
 		
 			 gestion.add(userItem3);
 		
 			 gestion.add(userItem5);
 		
-			
+			 gestion4.add(userItem0);
 			if (VariableSession.getCurrentUser()  instanceof ShopOwner) {
 				 gestion.add(userItem7);
 			}
@@ -200,6 +214,7 @@ public class FrameWelcome extends JFrame {
 			 menubar.add(gestion);
 			 menubar.add(gestion2);
 			 menubar.add(gestion3);
+			 menubar.add(gestion4);
 			 
 			  JMenuItem exit = new JMenuItem("Logout");
 			  exit.addMouseListener(new MouseAdapter() {
