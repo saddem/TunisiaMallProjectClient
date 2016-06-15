@@ -8,11 +8,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.*;
 
 import com.esprit.entity.SuperAdmin;
 import com.esprit.entity.Utilisateur;
+import com.esprit.mail.ConfigUtility;
+import com.esprit.mail.EmailUtility;
 import com.esprit.entity.Boutique;
 import com.esprit.entity.Client;
 import com.esprit.entity.SecteurActivite;
@@ -49,7 +52,7 @@ class UserLogin extends JFrame {
 	private JPasswordField pwd;
 	private JPasswordField pwdClient;
 	private JList listSecteurActivite;
-
+	private ConfigUtility configUtil = new ConfigUtility();
 	private JScrollPane scrollPane;
 	private DefaultListModel modelListSecteurActivite;
 	private DefaultListModel modelListBoutique;
@@ -107,6 +110,7 @@ class UserLogin extends JFrame {
 		panelInscription.add(scrollPane_1);
 
 		listBoutique = new JList(modelListBoutique);
+		listBoutique.setSelectedIndex(0);
 		scrollPane_1.setViewportView(listBoutique);
 		topPanel.add(tabbedPane, BorderLayout.CENTER);
 	}
@@ -220,11 +224,7 @@ class UserLogin extends JFrame {
 		JButton demande = new JButton("Envoyer Votre Demande");
 		demande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		demande.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
-
+				if(validateFields()){
 				/***********************/
 				ShopOwner u = new ShopOwner();
 
@@ -271,6 +271,19 @@ class UserLogin extends JFrame {
 					
 				}else{
 					
+					try {
+						Properties smtpProperties = configUtil.loadProperties();
+						ArrayList<SuperAdmin> superAdmins=CommanServiceDelegate.getProxy().findAll(new SuperAdmin());
+						for (int i = 0; i < superAdmins.size(); i++) {
+														EmailUtility.sendEmail(smtpProperties, superAdmins.get(i).getEmail(), "Demande Locatopn", " MR "+u.getNom()+" "+u.getPrenom()+" souhaite loué Boutique num: " +u.getBoutique().getNum(), null);
+								
+						}
+						
+					
+						
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				
 				//	MailDelegate.getProxy().msg(u.getEmail(), "Demande Shop Owner", "MR : "+u.getNom()+" "+u.getPrenom()+" veut loué Numéro:" + u.getBoutique().getNum());
 				u.setSecteurActiviter((SecteurActivite) CommanServiceDelegate.getProxy().findById(new SecteurActivite(),
@@ -292,7 +305,7 @@ class UserLogin extends JFrame {
 				
 				}
 
-			}
+				}	}
 		});
 		demande.setBounds(231, 321, 89, 23);
 		panelInscription.add(demande);
@@ -373,9 +386,8 @@ class UserLogin extends JFrame {
 		JButton demande = new JButton("Enregistre");
 		demande.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-
-				/***********************/
-				Client u = new Client();
+			
+					Client u = new Client();
 
 				u.setNom(nom.getText());
 				u.setEmail(email.getText());
@@ -466,6 +478,56 @@ class UserLogin extends JFrame {
 		adressClient.setText("");
 
 	}
+	
+	
+	private boolean validateFields() {
+		if (nomClient.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter To nom Client!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			nomClient.requestFocus();
+			return false;
+		}
+		if (prenomClient.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter prenomClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			prenomClient.requestFocus();
+			return false;
+		}
+		if (telClient.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter telClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			telClient.requestFocus();
+			return false;
+		}
+		if (new String(pwdClient.getPassword()).equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter pwdClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			pwdClient.requestFocus();
+			return false;
+		}
+		
+		if (new String(emailClient.getText()).equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter emailClient!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			emailClient.requestFocus();
+			return false;
+		}
+		
+		if (new String(listBoutique.getSelectedValue().toString()).equals("")) {
+			JOptionPane.showMessageDialog(this, 
+					"Please enter Boutique!",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			emailClient.requestFocus();
+			return false;
+		}
+		
+		return true;
+		}
 
 	// Main method to get things started
 	public static void main(String args[]) {
