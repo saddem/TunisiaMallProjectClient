@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import com.swing.frame.FrameAdministrateur;
 import com.swing.frame.FrameBoutique;
 import com.swing.frame.FrameCategorie;
+import com.swing.frame.FrameCommandeShopOwner;
 import com.swing.frame.FrameEvenement;
 import com.swing.frame.FrameProduit;
 import com.swing.frame.FrameProfile;
@@ -36,6 +37,7 @@ public class FrameWelcomeShopOwner extends JFrame {
 	 FrameProfile frameProfile;
 	 FrameSousCategorie frameSousCategorie;
 	 FrameProduit frameProduit;
+	 FrameCommandeShopOwner frameCommande;
 	 
 	 
 	 void disableFrame(){
@@ -51,6 +53,9 @@ public class FrameWelcomeShopOwner extends JFrame {
 		 
 		 if (frameProduit!=null){
 			 frameProduit.setVisible(false);
+		 }
+		 if (frameCommande!=null){
+			 frameCommande.setVisible(false);
 		 }
 		
 		 
@@ -70,6 +75,7 @@ public class FrameWelcomeShopOwner extends JFrame {
 			 JMenuItem userItem1 = new JMenuItem("profile");
 			 JMenuItem userItem2 = new JMenuItem("Sous Categorie");
 			 JMenuItem userItem3 = new JMenuItem("Produit");
+			 JMenuItem userItem4 = new JMenuItem("Commandes");
 			
 
 			
@@ -98,11 +104,19 @@ public class FrameWelcomeShopOwner extends JFrame {
 					 frameProduit.setVisible(true);
 				 }});
 			 
+			 userItem4.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent event) {
+					 disableFrame();
+					 frameCommande=new FrameCommandeShopOwner(Menu());
+					 frameCommande.setVisible(true);
+				 }});
+			 
 		
 			 
 			 gestion.add(userItem1);
 			 gestion.add(userItem2);
 			 gestion.add(userItem3);
+			 gestion.add(userItem4);
 			 menubar.add(gestion);
 			 
 			 

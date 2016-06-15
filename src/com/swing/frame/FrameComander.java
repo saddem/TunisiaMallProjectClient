@@ -1,19 +1,20 @@
 package com.swing.frame;
 
-
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
+import com.esprit.entity.Categorie;
+import com.esprit.entity.Commande;
+import com.esprit.entity.Produit;
+import com.esprit.entity.Prouduit_Commande;
 import com.esprit.entity.SecteurActivite;
 
 //import com.swing.luncher.FrameMenu;
 
-import com.swing.modelData.ModelSecteurActiviter;
+import com.swing.modelData.ModelCategorie;
+import com.swing.modelData.ModelCommander;
 
 import delegate.CommanServiceDelegate;
 import javax.swing.JLabel;
@@ -25,8 +26,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,15 +36,15 @@ import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
 
-public class FrameSecteurActiviter extends JFrame {
+public class FrameComander extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField id;
 	private JTable table;
-	private ModelSecteurActiviter modele;
-	private JTextField libelle;
-	private JTextArea description;
-
+	private ModelCommander modele;
+	private JTextField quantiter;
+	
+	private JList list;
 	/**
 	 * Launch the application.
 
@@ -53,8 +54,8 @@ public class FrameSecteurActiviter extends JFrame {
 	 * @param jMenuBar 
 	 */
 	
-	public FrameSecteurActiviter(JMenuBar jMenuBar) {
-		setTitle("Secteur Activiter");
+	public FrameComander(JMenuBar jMenuBar) {
+		setTitle("Commander");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 689, 335);
 		setJMenuBar(jMenuBar);
@@ -64,38 +65,38 @@ public class FrameSecteurActiviter extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		
 		JLabel lblId = new JLabel("ID");
-		lblId.setBounds(57, 157, 46, 14);
+		lblId.setBounds(159, 157, 40, 14);
 		contentPane.add(lblId);
 		
 		id = new JTextField();
 		id.setEnabled(false);
-		id.setBounds(80, 154, 40, 20);
+		id.setBounds(209, 154, 40, 20);
 		contentPane.add(id);
 		id.setColumns(10);
 		
-		JButton Add = new JButton("Add");
+		JButton Add = new JButton("Commander");
 		
 		Add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				/***********************/
-			
-				SecteurActivite u=new SecteurActivite();
+			   Prouduit_Commande u=new Prouduit_Commande();
+				
+				
 				if(!id.getText().isEmpty()&&id.getText().equals(""))
-				u.setId(Integer.parseInt(id.getText()));
-		
-	
-				u.setDescription(description.getText());
-		
-				u.setLibelle(libelle.getText());				
+				u.setQuantite(quantiter.getText());
 				
 				/***********************/
+				u.setProduitId((long) CommanServiceDelegate.getProxy().findById(new Produit(),"id","'"+list.getSelectedValue().toString()+"'"));
+
 				
 				CommanServiceDelegate.getProxy().create(u);
 
 				clearTextFieldsS();
-				table.setModel(new ModelSecteurActiviter());
+				table.setModel(new ModelCommander());
 				
 			//	UserServiceDelagate.getProxy().deleteUser(user);
 			//	UserServiceDelagate.getProxy().updateUser(user);
@@ -108,29 +109,27 @@ public class FrameSecteurActiviter extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		Add.setBounds(160, 240, 89, 23);
+		Add.setBounds(190, 236, 115, 23);
 		contentPane.add(Add);
 		
 		JButton Remove = new JButton("Remove");
 		Remove.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				SecteurActivite u=new SecteurActivite();
-				u.setId(Integer.parseInt(id.getText()));
 				
-
+				Prouduit_Commande u=new Prouduit_Commande();
 				
-				CommanServiceDelegate.getProxy().delete(new SecteurActivite(),"id",u.getId()+"");
+				CommanServiceDelegate.getProxy().delete(new Prouduit_Commande(),"id",u.getCommandeId()+"");
 				clearTextFieldsS();
 				
 				table.clearSelection();
-				table.setModel(new ModelSecteurActiviter());
+				table.setModel(new ModelCommander());
 				
 				
 			//	UserServiceDelagate.getProxy().updateUser(user);
 			}
 		});
-		Remove.setBounds(248, 240, 89, 23);
+		Remove.setBounds(304, 236, 89, 23);
 		contentPane.add(Remove);
 		
 		JButton Update = new JButton("Update");
@@ -138,33 +137,29 @@ public class FrameSecteurActiviter extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				/***********************/
-				SecteurActivite u=new SecteurActivite();
-				u.setId(Integer.parseInt(id.getText()));
-		
-	
-				u.setDescription(description.getText());
-		
-				u.setLibelle(libelle.getText());				
+				Prouduit_Commande u = new Prouduit_Commande();
+				
 				
 				
 								/***********************/
 				
-				
+				u.setProduitId(  (long) CommanServiceDelegate.getProxy().findById(new Produit(),"id","'"+list.getSelectedValue().toString()+"'"));
+
 				
 				CommanServiceDelegate.getProxy().update(u);
 				
 				
 				clearTextFieldsS();
-				table.setModel(new ModelSecteurActiviter());
+				table.setModel(new ModelCommander());
 				
 		
 				
 			}
 		});
-		Update.setBounds(334, 240, 89, 23);
+		Update.setBounds(390, 236, 89, 23);
 		contentPane.add(Update);
 		
-		modele= new ModelSecteurActiviter() ;
+		modele= new ModelCommander() ;
 		table = new JTable(modele);
 	
 		
@@ -173,22 +168,16 @@ public class FrameSecteurActiviter extends JFrame {
 		scrollPane.setBounds(20, 11, 622, 104);
 		contentPane.add(scrollPane);
 		
-		JLabel lblPrnom = new JLabel("Libelle");
-		lblPrnom.setBounds(156, 157, 46, 14);
+		JLabel lblPrnom = new JLabel("quantiter");
+		lblPrnom.setBounds(262, 157, 46, 14);
 		contentPane.add(lblPrnom);
 		
-		libelle = new JTextField();
-		libelle.setBounds(232, 153, 86, 20);
-		contentPane.add(libelle);
-		libelle.setColumns(10);
+		quantiter = new JTextField();
+		quantiter.setBounds(318, 154, 86, 20);
+		contentPane.add(quantiter);
+		quantiter.setColumns(10);
 		
-		JLabel lblAdresse = new JLabel("Description");
-		lblAdresse.setBounds(328, 157, 65, 14);
-		contentPane.add(lblAdresse);
 		
-		description = new JTextArea();
-		description.setBounds(411, 151, 139, 77);
-		contentPane.add(description);
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -197,15 +186,30 @@ public class FrameSecteurActiviter extends JFrame {
 				 int row = table.getSelectedRow();
 
 				 id.setText( table.getValueAt(row, 0).toString());
+				 
+				 //libelle.setText(table.getValueAt(row, 1).toString());
 
-				 libelle.setText(table.getValueAt(row, 1).toString());
-
-				 description.setText(table.getValueAt(row, 2).toString());
+				 //description.setText(table.getValueAt(row, 2).toString());
 			} 
 		});
 	/*********************************************************/	
 		
-	
+	DefaultListModel modelList =  new DefaultListModel();
+		ArrayList<Prouduit_Commande>commandes=CommanServiceDelegate.getProxy().findAll(new Prouduit_Commande());
+		for (int i = 0; i < commandes.size(); i++) {
+			modelList.addElement(commandes.get(i).getCommandeId());
+				
+		}
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(20, 126, 133, 148);
+		contentPane.add(scrollPane_1);
+		
+			list = new JList(modelList);
+			scrollPane_1.setViewportView(list);
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list.setSelectedIndex(0);
+		
 	}
 	
 	public void clearTextFieldsS (){
@@ -214,11 +218,9 @@ public class FrameSecteurActiviter extends JFrame {
 
 		 id.setText("");
 	
-		 libelle.setText("");
-		 description.setText("");
+		// libelle.setText("");
+		 
+		// description.setText("");
 		 
 	}
-	
-
-
 	}
