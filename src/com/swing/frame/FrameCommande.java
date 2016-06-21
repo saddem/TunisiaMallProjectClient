@@ -52,7 +52,7 @@ public class FrameCommande extends JFrame {
 	public FrameCommande(JMenuBar jMenuBar) {
 		setTitle("Commande");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 689, 335);
+		setBounds(100, 100, 685, 444);
 		setJMenuBar(jMenuBar);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

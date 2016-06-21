@@ -25,6 +25,10 @@ import javax.swing.JTable;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JList;
+import javax.swing.JToolBar;
+import javax.swing.JToggleButton;
+import javax.swing.JComboBox;
+import java.awt.Component;
 
 public class FrameBoutique extends JFrame {
 
@@ -33,43 +37,31 @@ public class FrameBoutique extends JFrame {
 	private ModelBoutique modele;
 	private JTextField tel;
 	private JTextField localisation;
-	private JTextField textField;
 	private JList list ;
-	/**
-	 * Launch the application.
+	private JTextField libelleboutique;
+	private JTextField textField;
 
-
-	/**
-	 * Create the frame.
-	 * @param jMenuBar 
-	 */
 	public FrameBoutique(JMenuBar jMenuBar) {
 		setTitle("Boutique");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 433);
-		//setJMenuBar(new FrameMenu().Menu());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setJMenuBar(jMenuBar);
 		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		JButton Add = new JButton("Add");
-		
 		Add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				/***********************/
+
 				Boutique u=new Boutique();
-				u.setEtat( list.getSelectedValue().toString());
+				u.setEtat(list.getSelectedValue().toString());
+				u.setLibelle(libelleboutique.getText());
 				u.setNum(Integer.parseInt(localisation.getText()));
 				u.setTel(tel.getText());
-						
-				/***********************/
-				
 				CommanServiceDelegate.getProxy().create(u);
-
 				clearTextFieldsS();
 				table.setModel(new ModelBoutique());
 
@@ -82,7 +74,7 @@ public class FrameBoutique extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		Add.setBounds(203, 284, 89, 23);
+		Add.setBounds(142, 289, 89, 23);
 		contentPane.add(Add);
 		
 		JButton Remove = new JButton("Remove");
@@ -92,44 +84,34 @@ public class FrameBoutique extends JFrame {
 			
 				CommanServiceDelegate.getProxy().delete(new Boutique(),"id",textField.getText()+"");
 				clearTextFieldsS();
-				
 				table.clearSelection();
 				table.setModel(new ModelBoutique());
-				
-				
-			//	UserServiceDelagate.getProxy().updateUser(user);
 			}
 		});
-		Remove.setBounds(291, 284, 89, 23);
+		Remove.setBounds(230, 289, 89, 23);
 		contentPane.add(Remove);
 		
 		JButton Update = new JButton("Update");
 		Update.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				
-Boutique u=new Boutique();
+                Boutique u=new Boutique();
 				
 				u.setNum(Integer.parseInt(localisation.getText()));
 				u.setTel(tel.getText());
-				
-				/***********************/
-				
-				
+				u.setLibelle(libelleboutique.getText());
+
 				Boutique u2=new Boutique();
 				u2=(Boutique) CommanServiceDelegate.getProxy().findById(new Boutique(), "id",textField.getText() );
 				u.setEtat( list.getSelectedValue().toString());
 				u.setId(u2.getId());
-				CommanServiceDelegate.getProxy().update(u);
-				
-				
+				CommanServiceDelegate.getProxy().update(u);				
 				clearTextFieldsS();
 				table.setModel(new ModelBoutique());
-				
-		
-				
+
 			}
 		});
-		Update.setBounds(377, 284, 89, 23);
+		Update.setBounds(316, 289, 89, 23);
 		contentPane.add(Update);
 		
 		modele= new ModelBoutique() ;
@@ -141,57 +123,59 @@ Boutique u=new Boutique();
 		scrollPane.setBounds(20, 11, 622, 104);
 		contentPane.add(scrollPane);
 		
-		JLabel lblTl = new JLabel("Tél");
-		lblTl.setBounds(500, 196, 46, 14);
+		JLabel lblTl = new JLabel("Telephone");
+		lblTl.setBounds(424, 227, 63, 14);
 		contentPane.add(lblTl);
 		
 		tel = new JTextField();
-		tel.setBounds(556, 193, 86, 20);
+		tel.setBounds(497, 224, 86, 20);
 		contentPane.add(tel);
 		tel.setColumns(10);
 		
 		JLabel lbl = new JLabel("Localisation");
-		lbl.setBounds(286, 196, 89, 14);
+		lbl.setBounds(142, 181, 89, 14);
 		contentPane.add(lbl);
 		
 		localisation = new JTextField();
-		localisation.setBounds(385, 193, 105, 20);
+		localisation.setBounds(252, 178, 40, 20);
 		contentPane.add(localisation);
 		localisation.setColumns(10);
-		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(190, 193, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblId = new JLabel("Id");
-		lblId.setBounds(147, 196, 27, 14);
-		contentPane.add(lblId);
 		
 		DefaultListModel modelList =  new DefaultListModel();
 	
 		modelList.addElement("Vide");
-		modelList.addElement("en négociation");
-		modelList.addElement("Loué");
+		modelList.addElement("en negociation");
+		modelList.addElement("Louer");
 		list = new JList(modelList);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setSelectedIndex(0);
-		list.setBounds(10, 180, 122, 95);
+		list.setBounds(10, 180, 122, 64);
 		contentPane.add(list);
+		
+		libelleboutique = new JTextField();
+		libelleboutique.setBounds(250, 224, 148, 20);
+		contentPane.add(libelleboutique);
+		libelleboutique.setColumns(10);
+		
+		JLabel lblNomBoutique = new JLabel("Nom Boutique");
+		lblNomBoutique.setBounds(142, 229, 89, 14);
+		contentPane.add(lblNomBoutique);
+		
+		textField = new JTextField();
+		textField.setEnabled(false);
+		textField.setColumns(10);
+		textField.setBounds(20, 139, 40, 20);
+		contentPane.add(textField);
 	/*****************************************************/	
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				 int row = table.getSelectedRow();
-
 				 textField.setText( table.getValueAt(row, 0).toString());
-				
-				 tel.setText(table.getValueAt(row, 1).toString());
-		
-				 localisation.setText(table.getValueAt(row, 2).toString());
-			
+				 localisation.setText(table.getValueAt(row, 1).toString());
+				 tel.setText(table.getValueAt(row, 2).toString());
+				 libelleboutique.setText( table.getValueAt(row, 3).toString());
 			} 
 		});
 	/*********************************************************/	
@@ -200,7 +184,7 @@ Boutique u=new Boutique();
 	public void clearTextFieldsS (){
 
 	   	 list.setSelectedIndex(0);
-		 textField.setText("");		
+		 libelleboutique.setText("");		
 		 tel.setText("");
 		 localisation.setText("");
 

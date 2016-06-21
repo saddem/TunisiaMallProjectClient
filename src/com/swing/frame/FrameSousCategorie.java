@@ -43,19 +43,12 @@ public class FrameSousCategorie extends JFrame {
 	private JTextField libelle;
 	private JTextArea description;
 	private JList list;
-	/**
-	 * Launch the application.
 
-
-	/**
-	 * Create the frame.
-	 * @param jMenuBar 
-	 */
 	
 	public FrameSousCategorie(JMenuBar jMenuBar) {
 		setTitle("Sous Categorie");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 689, 335);
+		setBounds(100, 100, 685, 444);
 		setJMenuBar(jMenuBar);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,30 +70,17 @@ public class FrameSousCategorie extends JFrame {
 		Add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				/***********************/
-			
 				SousCategorie u=new SousCategorie();
 				if(!id.getText().isEmpty()&&id.getText().equals(""))
 				u.setId(Integer.parseInt(id.getText()));
-		
-	
 				u.setDescription(description.getText());
-		
 				u.setLibelle(libelle.getText());	
 				u.setShopOwner((ShopOwner)VariableSession.getCurrentUser());
-				
-				/***********************/
-				System.out.println(list.getSelectedValue().toString());
 				u.setCategorie((Categorie) CommanServiceDelegate.getProxy().findById(new Categorie(), "libelle", "'"+list.getSelectedValue().toString()+"'"));
-
-				
 				CommanServiceDelegate.getProxy().create(u);
-
 				clearTextFieldsS();
 				table.setModel(new ModelSousCategorie());
-				
-			//	UserServiceDelagate.getProxy().deleteUser(user);
-			//	UserServiceDelagate.getProxy().updateUser(user);
+
 			}
 		});
 		
@@ -119,17 +99,11 @@ public class FrameSousCategorie extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				Categorie u=new Categorie();
 				u.setId(Integer.parseInt(id.getText()));
-				
-
-				
 				CommanServiceDelegate.getProxy().delete(new SousCategorie(),"id",u.getId()+"");
 				clearTextFieldsS();
-				
 				table.clearSelection();
 				table.setModel(new ModelSousCategorie());
-				
-				
-			//	UserServiceDelagate.getProxy().updateUser(user);
+
 			}
 		});
 		Remove.setBounds(304, 236, 89, 23);
@@ -142,21 +116,13 @@ public class FrameSousCategorie extends JFrame {
 				/***********************/
 				SousCategorie u=new SousCategorie();
 				u.setId(Integer.parseInt(id.getText()));
-		
-	
 				u.setDescription(description.getText());
-		
 				u.setLibelle(libelle.getText());				
+                u.setCategorie((Categorie) CommanServiceDelegate.getProxy().findById(new Categorie(), "libelle", "'"+list.getSelectedValue().toString()+"'"));
 				
-				
-								/***********************/
-				
-				u.setCategorie((Categorie) CommanServiceDelegate.getProxy().findById(new Categorie(), "libelle", "'"+list.getSelectedValue().toString()+"'"));
-
-				
+               ShopOwner shopOwner = (ShopOwner) VariableSession.getCurrentUser();
+               u.setShopOwner(shopOwner);
 				CommanServiceDelegate.getProxy().update(u);
-				
-				
 				clearTextFieldsS();
 				table.setModel(new ModelSousCategorie());
 				
